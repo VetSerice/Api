@@ -1,0 +1,33 @@
+{
+  "name": "vetoservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vue-stripe/vue-stripe": "^4.2.5",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "gridfs-stream": "^1.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "6.2.0",
+    "mongoose-unique-validator": "3.0.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.3",
+    "multer-gridfs-storage": "^5.0.1",
+    "nodemon": "^2.0.12",
+    "stripe": "^8.178.0"
+  },
+  "devDependencies": {
+    "bson": "^4.6.5"
+  }
+}
