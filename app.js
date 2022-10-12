@@ -1,35 +1,35 @@
 const express = require("express");
-const { connect } = require("./db/connect");
 const cors = require("cors");
-
-const routerveto = require("./routers/vétérinaire");
-const routerUtilisateurs = require("./routers/utilisateur");
-const adminRoutes = require("./routers/admin");
-
+const USER_ROUTER = require('./router/user');
+const mongoose = require("mongoose");
+const CLIENT_ROUTER = require('./router/client');
+const PET_ROUTER = require('./router/pet');
+const SERVICE_ROUTER = require('./router/service');
+const DAY_SCHEDULE_ROUTER = require('./router/schedule');
+const BREED_ROUTER = require('./router/breed');
+const VETERINARY = require('./router/veterinary');
 
 const app = express();
-const corsOptions = {
-    origin: "http://localhost:8081"
-};
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use('/users', USER_ROUTER);
+app.use('/clients', CLIENT_ROUTER);
+app.use('/pets', PET_ROUTER);
+app.use('/services', SERVICE_ROUTER);
+app.use('/dayschedules', DAY_SCHEDULE_ROUTER);
+app.use('/breeds', BREED_ROUTER);
+app.use('/veterinarys', VETERINARY);
 
-app.use("/api/admin/auth", adminRoutes);
-app.use("/", routerUtilisateurs);
-app.use("/", routerveto);
 
-app.use(cors(corsOptions));
-connect("mongodb+srv://ourdi:13Laoto13@cluster0.0rofrok.mongodb.net/?retryWrites=true&w=majority", (err) => {
-    if (err) {
-        console.log("Erreur lors de la connexion à la base de données");
-        process.exit(-1);
-    } else {
-        console.log("Connexion avec la base de données établie");
-        app.listen(3000);
-        console.log("Attente des requêtes au port 8800");
-    }
-});
+app.use(cors())
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useUnifiedTopology", true);
+mongoose.set("useCreateIndex", true);
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+    .then(connect => console.log('connected to mongodb..'))
+    .catch(e => console.log('could not connect to mongodb', e))
 
 
 const PORT = process.env.PORT || 8080;
