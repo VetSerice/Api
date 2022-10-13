@@ -2,6 +2,8 @@ const VET = require('../models/veterinary.js');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const CLIENT = require("../models/client");
+const APPOINTMENT = require("../models/appointment");
+const DAY_SCHEDULE = require("../models/day_schedule");
 
 exports.SignUpVeterinary = async (req, res) => {
     const body = req.body;
@@ -91,6 +93,18 @@ exports.GetVeterinarys = (req, res) => {
 
             res.json(vets);
         });
+};
+exports.GetVeto = (req, res) => {
+    VET.findById(req.query.id, (err, veto) => {
+        if(err)
+            res.status(406).json();
+
+        if(veto)
+            /* Success */
+            res.status(200).json(veto);
+        else
+            res.status(404).json();
+    });
 };
 
 

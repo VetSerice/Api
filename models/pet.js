@@ -4,7 +4,7 @@ const BREED = require('./schemas/breed.js');
 var Schema = MONGOOSE.Schema;
 
 var PetSchema = new Schema({
-	namepet: { type: String, required: true },
+	name: { type: String, required: true },
 	birthdate: { type: Date },
 	age: { type: Number },
 	weight: { type: Number },

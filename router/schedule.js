@@ -11,4 +11,6 @@ ROUTER.post('/', AUTH_TOKEN, DAY_SCHEDULE.DaySchedule);
 ROUTER.post('/add-appointment', AUTH_TOKEN, DAY_SCHEDULE.AddAppointment);
 ROUTER.post('/update-appointments', AUTH_TOKEN, DAY_SCHEDULE.UpdateAppointment);
 
+ROUTER.get('/daywork', AUTH_TOKEN, DAY_SCHEDULE.DayworkVet);
+
 module.exports = ROUTER;

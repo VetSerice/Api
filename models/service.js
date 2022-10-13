@@ -4,6 +4,7 @@ var Schema = MONGOOSE.Schema;
 
 var ServiceSchema = new Schema({
 	name: { type: String, required: true },
+	name: { type: String, required: true },
 	price: { type: Number, required: true },
 	type: { type: String, required: true }
 });

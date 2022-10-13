@@ -8,7 +8,7 @@ const fs = require('fs');
 exports.CreatePet = (req, res, next) => {
     console.log(req.body)
     const pet = new PET({
-        namepet: req.body.namepet,
+        name: req.body.name,
         breed: req.body.breed,
         femaleOrMale: req.body.femaleOrMale,
     }).save((err, pet) => {
@@ -103,7 +103,7 @@ exports.AddVaccinationRecord = (req, res) => {
     PET.findByIdAndUpdate(req.body.id, { vaccinationRecord: records }, err => {
         if(err)
             return res.status(406).json(err);
-        res.sendStatus(201);
+        res.status(201).json({ message: "vacc add  created" });
     });
 };
 

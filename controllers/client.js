@@ -1,20 +1,22 @@
-
 const CLIENT = require('../models/client.js');
 const bcrypt = require("bcrypt");
 const VET = require("../models/veterinary");
 const jwt = require("jsonwebtoken");
+const APPOINTMENT = require("../models/appointment");
+const DAY_SCHEDULE = require("../models/day_schedule");
 
 exports.CreateClient = (req, res, next) => {
     var pets = [];
     pets.push(res.locals.pet._id);
     const client = new CLIENT({
-        name: req.body.name,
+        nameClient: req.body.nameClient,
         phone: req.body.phone,
         pets: pets,
     }).save((err, client) => {if(err)
         return next(err);
         /* Success */
         res.locals.client = client;
+        res.status(201).json({ message: "client created" });
         next();
     });
 
@@ -39,7 +41,7 @@ exports.SignUpClient = async (req, res) => {
                 address: req.body.address
             });
             clien.save().then(() => {
-                res.status(201).json({message: "vet created"});
+                res.status(201).json({message: "client created"});
             }).catch((error) => res.status(400).json({error}));
 
 
@@ -119,3 +121,8 @@ exports.LoginClient = (req, res) => {
         .catch((error) => res.status(500).json({ error }));
 
 };
+
+
+
+
+

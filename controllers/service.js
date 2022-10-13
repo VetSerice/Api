@@ -9,6 +9,7 @@ exports.GetServices = (req, res) => {
                 return res.status(406).json(err);
 
             /* Succes */
+
             res.status(200).json(services);
         });
 };
@@ -57,7 +58,7 @@ exports.CreateService = (req, res) => {
             return res.status(406).json(err);
 
         /* Success */
-        res.sendStatus(201);
+        res.status(201).json({ message: "service  created" });
     });
 };
 exports.Delete = (req, res) => {
@@ -66,6 +67,6 @@ exports.Delete = (req, res) => {
             res.status(406).json(err);
 
         /* Success */
-        res.sendStatus(200);
+        res.status(201).json({ message: "service  delete" });
     });
 };

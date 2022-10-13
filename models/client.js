@@ -4,9 +4,9 @@ const ADDRESS = require('./schemas/address.js');
 var Schema = MONGOOSE.Schema;
 
 var ClientSchema = new Schema({
-	name: { type: String, required: true },
-	email: { type: String, required: true },
-	password: { type: String, required: true },
+	nameClient: { type: String, required: false },
+	email: { type: String, required: false },
+	password: { type: String, required: false },
 	phone: { type: Number, required: true },
 	pets: { type: [MONGOOSE.ObjectId], required: true },
 	address: {

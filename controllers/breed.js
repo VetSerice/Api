@@ -11,11 +11,9 @@ exports.CreateBreed = (req, res) => {
 			return res.status(406).json(err);
 
 		/* Success */
-		res.status(201).json(MY_BREED);
+		res.status(201).json({ message: "breeed  created" });
 	});
 };
-
-
 exports.GetBreeds = (req, res) => {
 	BREED.find()
 		 .populate('breed')
@@ -27,8 +25,6 @@ exports.GetBreeds = (req, res) => {
 			 res.status(200).json(breeds);
 		 });
 };
-
-
 exports.GetBreed = (req, res) => {
 	BREED.findById(req.query.id, (err, breed) => {
 		if(err)
@@ -46,7 +42,7 @@ exports.UpdateBreeed = (req, res) => {
 		if(err)
 			return res.status(406).json(err);
 
-		res.sendStatus(201);
+		res.status(201).json({ message: "breed  up" });
 	});
 };
 
