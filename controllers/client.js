@@ -4,6 +4,7 @@ const VET = require("../models/veterinary");
 const jwt = require("jsonwebtoken");
 const APPOINTMENT = require("../models/appointment");
 const DAY_SCHEDULE = require("../models/day_schedule");
+const SERVICE = require("../models/service");
 
 exports.CreateClient = (req, res, next) => {
     var pets = [];
@@ -121,7 +122,9 @@ exports.LoginClient = (req, res) => {
         .catch((error) => res.status(500).json({ error }));
 
 };
-
+exports.GetClientID =  (id) => {
+    return CLIENT.findById(id)
+};
 
 
 

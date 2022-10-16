@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const CLIENT = require("../models/client");
 const APPOINTMENT = require("../models/appointment");
 const DAY_SCHEDULE = require("../models/day_schedule");
+const SERVICE = require("../models/service");
 
 exports.SignUpVeterinary = async (req, res) => {
     const body = req.body;
@@ -106,5 +107,9 @@ exports.GetVeto = (req, res) => {
             res.status(404).json();
     });
 };
-
-
+exports.GetVetID =async (id) => {
+    let veto = await VET.findById(id)
+    if(!veto)
+         throw Error("veto n'existe pas ")
+    return veto
+};

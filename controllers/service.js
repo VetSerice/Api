@@ -70,3 +70,8 @@ exports.Delete = (req, res) => {
         res.status(201).json({ message: "service  delete" });
     });
 };
+
+exports.GetServiceID =  (id) => {
+    return SERVICE.findById(id )
+
+};

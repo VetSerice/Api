@@ -10,6 +10,11 @@ var VeterinarySchema = new Schema({
     valid: { type: Boolean, required: true },
     phone: { type: Number, required: true },
 
+    Education: { type: String, required: false },
+    Specialization: { type: String, required: false },
+    Availability: { type: String, required: false },
+    Experience: { type: String, required: false },
+
     vetAddress: {
         street: { type: String, required: false },
         number: { type: Number, required: false },

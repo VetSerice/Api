@@ -6,7 +6,7 @@ var Schema = MONGOOSE.Schema;
 const DayScheduleSchema = new Schema({
 	date: { type: String, required: true },
 	veterinaryId: { type: String, required: true },
-	appointments: { type: [APPOINTMENT], required: true }
+	appointments: { type: [MONGOOSE.ObjectId], required: true }
 });
 
 module.exports = MONGOOSE.model('DaySchedule', DayScheduleSchema);
