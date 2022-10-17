@@ -9,7 +9,6 @@ const fs = require('fs');
 exports.GetPetID =  (id) => {
     return PET.findById(id )
 };
-
 exports.CreatePet = (req, res, next) => {
     console.log(req.body)
     const pet = new PET({

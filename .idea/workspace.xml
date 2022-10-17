@@ -6,15 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="fda572ff-fbcf-4e27-a492-f938d8464ec5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/client.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/pet.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/pet.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/schedule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/service.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/veterinary.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/veterinary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/day_schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/day_schedule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/schemas/appointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/schemas/appointment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/client.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/veterinary.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/veterinary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/schedule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router/veterinary.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/veterinary.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +136,7 @@
       <workItem from="1664884861071" duration="6790000" />
       <workItem from="1664895439333" duration="92413000" />
       <workItem from="1665619339310" duration="1080000" />
-      <workItem from="1665621005665" duration="32758000" />
+      <workItem from="1665621005665" duration="38023000" />
     </task>
     <servers />
   </component>

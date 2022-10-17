@@ -5,6 +5,9 @@ const CLIENT = require("../models/client");
 const APPOINTMENT = require("../models/appointment");
 const DAY_SCHEDULE = require("../models/day_schedule");
 const SERVICE = require("../models/service");
+const Type = require("../models/type");
+const User = require("../models/user");
+const PET = require("../models/pet");
 
 exports.SignUpVeterinary = async (req, res) => {
     const body = req.body;
@@ -113,3 +116,57 @@ exports.GetVetID =async (id) => {
          throw Error("veto n'existe pas ")
     return veto
 };
+exports.UpdateVeto =  (req, res) => {
+    bcryptjs.hash(req.body.password, 10, async (err, hashed_password) => {
+        if (err)
+            return res.status(406).json(err);
+        /* Success */
+        let upddate = await VET.findByIdAndUpdate(req.body.id, {
+            _id: req.body.id,
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            phone: req.body.phone,
+            Education: req.body.Education,
+            Specialization: req.body.Specialization,
+            Availability: req.body.Availability,
+            Experience: req.body.Experience,
+            Break_Hours: req.body.Break_Hours,
+            vetAddress: req.body.vetAddress,
+            vetHeadOfMedics: req.body.vetHeadOfMedics,
+        }, err => {
+            if (err)
+                return res.status(406).json(err);
+            /* Success */
+            return upddate
+        });
+    });
+};
+exports.Validate =async (req,res) => {
+    VET.findById(req.query.id, async (err, veto) => {
+        if (err)
+            res.status(406).json();
+        console.log(veto.valid)
+        if (veto.valid ==false) {
+             VET.findByIdAndUpdate(req.query.id, {
+                valid: true,
+            }, err => {
+                if (err)
+                    return res.status(406).json(err);
+                /* Success */
+                 return res.status(200).send({ message: " vous avez bien valider ce compte " });
+             });
+        }
+        if (veto.valid ==true) {
+            return res.status(200).send({ message: " compte est deja valider " });
+
+        }
+
+            /* Success */
+        //res.status(200).json(veto);
+        else
+            res.status(404).json();
+    });
+
+}
+

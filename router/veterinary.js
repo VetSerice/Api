@@ -14,6 +14,9 @@ ROUTER.post('/create',  VETERINARY.CreateVeterinary);
 ROUTER.get('/all',  VETERINARY.GetVeterinarys);
 //ROUTER.get('/appointment', AUTH_TOKEN, VETERINARY.GetvVterinaryappointment);
 ROUTER.get('/veterinary', AUTH_TOKEN, VETERINARY.GetVeto);
+ROUTER.post('/valider', AUTH_TOKEN, VETERINARY.Validate);
+ROUTER.post('/update',  VETERINARY.UpdateVeto);
+
 
 
 module.exports = ROUTER;

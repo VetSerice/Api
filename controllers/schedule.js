@@ -51,16 +51,16 @@ exports.UpdateAppointment = (req, res, next) => {
 };
 // get les date pour un veto       const user = await CLIENT.findOne({email: body.email});
 exports.DayworkVet = (req, res, next) => {
-    DAY_SCHEDULE.findOne({ veterinaryId: req.query.veterinaryId}, (err, MyDaySchedule) => {
+    DAY_SCHEDULE.find({ veterinaryId: req.query.veterinaryId}, (err, MyDaySchedule) => {
           if(err)
               return res.status(406).json(err);
         if (!MyDaySchedule) {
             return res.status(411).send({ error: "id invalide " });
         }
-          if (MyDaySchedule.veterinaryId){
-              res.status(200).json(MyDaySchedule.date);
+          if (MyDaySchedule.length >0){
+              res.status(200).json(MyDaySchedule);
           }else {
-              console.log(MyDaySchedule.date)
+              console.log(MyDaySchedule)
               return res.status(411).send({ error: "pas de date programmé " });
           }
 

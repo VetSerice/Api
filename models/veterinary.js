@@ -14,6 +14,8 @@ var VeterinarySchema = new Schema({
     Specialization: { type: String, required: false },
     Availability: { type: String, required: false },
     Experience: { type: String, required: false },
+    Break_Hours: { type: String, required: false },
+
 
     vetAddress: {
         street: { type: String, required: false },
