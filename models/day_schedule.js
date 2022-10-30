@@ -5,6 +5,7 @@ var Schema = MONGOOSE.Schema;
 
 const DayScheduleSchema = new Schema({
 	date: { type: Date, required: true },
+	veterinaryId: { type: String, required: true },
 	appointments: { type: [APPOINTMENT], required: true }
 });
 

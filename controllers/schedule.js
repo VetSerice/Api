@@ -22,11 +22,11 @@ exports.DaySchedule = (req, res) => {
             }else{
                 const NewDaySchedule = new DAY_SCHEDULE({
                     date: req.body.date,
+                    veterinaryId:req.body.veterinaryId,
                     appointments: []
                 }).save((err, NewDaySchedule) => {
                     if(err)
-                        console.log(err)
-                        // res.status(406).json(err);
+                        res.status(406).json(err);
 
                     /* Success */
                     else {
