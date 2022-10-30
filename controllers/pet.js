@@ -7,7 +7,7 @@ const fs = require('fs');
 
 
 exports.GetPetID =  (id) => {
-    return PET.findById(id )
+    return PET.findById(id)
 };
 exports.CreatePet = (req, res, next) => {
     console.log(req.body)
@@ -19,6 +19,8 @@ exports.CreatePet = (req, res, next) => {
         if(err)
             return res.status(406).json(err);
         res.locals.pet = pet;
+        console.log(res.locals.pet,"res.locals.pet")
+
         next();
     });
 };

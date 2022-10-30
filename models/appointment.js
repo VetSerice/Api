@@ -7,9 +7,10 @@ const AppointmentSchema = new Schema({
 	clientId: { type: String, required: true },
 	veterinaryId: { type: String, required: true },
 	done: { type: Boolean, default: false },
+	hour: { type: String, required: true},
 	petId: { type: String, required: true },
-	hour: { type: String, required: true },
-	notes: { type: String, default: null }
+	notes: { type: String, default: null },
+
 });
 
 module.exports = MONGOOSE.model('Appointment', AppointmentSchema);

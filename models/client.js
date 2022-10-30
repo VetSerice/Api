@@ -8,7 +8,6 @@ var ClientSchema = new Schema({
 	email: { type: String, required: false },
 	password: { type: String, required: false },
 	phone: { type: Number, required: true },
-	valid: { type: Boolean, required: true },
 	pets: { type: [MONGOOSE.ObjectId], required: true },
 	address: {
 		street: { type: String, required: false },

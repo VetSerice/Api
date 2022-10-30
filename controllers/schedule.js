@@ -8,31 +8,30 @@ const {GetPetID} = require("./pet");
 
 
 exports.DaySchedule = (req, res) => {
-    DAY_SCHEDULE.findOne({ date: req.body.date}, (err, MyDaySchedule) => {
+    DAY_SCHEDULE.findOne({ date: new Date(req.body.date) }, (err, MyDaySchedule) => {
         if(err)
             res.status(406).json(err);
-       if (MyDaySchedule){
-           return res.status(411).send({ error: "vous avais deja saisie cette date" });
-       }
+
         if(!MyDaySchedule){
             let temp_date = new Date();
             temp_date = MOMENT(temp_date).format('YYYY-MM-DD');
             today = new Date(temp_date);
             const REQUEST_DAY = new Date(req.body.date);
             if(REQUEST_DAY < today){
-                return res.status(411).send({ error: "la date saisie ne peut pas etre pour aujourd'huit" });
-
+                console.log(res.status(410).json())
             }else{
                 const NewDaySchedule = new DAY_SCHEDULE({
                     date: req.body.date,
-                    veterinaryId: req.body.veterinaryId,
                     appointments: []
                 }).save((err, NewDaySchedule) => {
                     if(err)
-                        res.status(406).json(err);
+                        console.log(err)
+                        // res.status(406).json(err);
 
                     /* Success */
-                    res.status(201).json(NewDaySchedule);
+                    else {
+                        res.status(201).json(NewDaySchedule);
+                    }
                 })
             }
         }else{
@@ -57,8 +56,8 @@ exports.DayworkVet = (req, res, next) => {
         if (!MyDaySchedule) {
             return res.status(411).send({ error: "id invalide " });
         }
-          if (MyDaySchedule.length >0){
-              res.status(200).json(MyDaySchedule);
+          if (MyDaySchedule[2]){
+              res.status(200).json(MyDaySchedule[1]);
           }else {
               console.log(MyDaySchedule)
               return res.status(411).send({ error: "pas de date programmé " });
@@ -110,12 +109,11 @@ exports.AddAppointments = async (req, res) => {
         clientId: req.body.clientId,
         serviceid:req.body.serviceid,
         veterinaryId: req.body.veterinaryId,
-        testt: req.body.testt,
         petId: req.body.petId,
         hour: req.body.hour,
         notes: req.body.notes ? req.body.notes : null
     });
-    console.log(req.body)
+
     let appointe= await MY_APPOINTMENT.save()
     DAY_SCHEDULE.findByIdAndUpdate(req.body.id, { $push:{appointments:appointe.id} }, (err ,doc) => {
             if(err)
@@ -123,6 +121,8 @@ exports.AddAppointments = async (req, res) => {
             /* Success */
             res.status(201).json(doc);
         });
+
+
 };
 
 

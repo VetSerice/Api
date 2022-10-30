@@ -9,14 +9,10 @@ var VeterinarySchema = new Schema({
     password: { type: String, required: true },
     valid: { type: Boolean, required: true },
     phone: { type: Number, required: true },
-
-    Education: { type: String, required: false },
-    Specialization: { type: String, required: false },
-    Availability: { type: String, required: false },
-    Experience: { type: String, required: false },
-    Break_Hours: { type: String, required: false },
-
-
+    Education: { type: String, required: false,default: null },
+    Specialization: { type: String, required: false,default: null },
+    Experience: { type: String, required: false,default: null },
+    Break_Hours: { type: [MONGOOSE.ObjectId], required: false },
     vetAddress: {
         street: { type: String, required: false },
         number: { type: Number, required: false },

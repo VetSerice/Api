@@ -9,7 +9,7 @@ const PET = require(PATH.join(__dirname, '../controllers/pet.js'));
 
 /* Client Routes */
 ROUTER.post('/create', AUTH_TOKEN, PET.CreatePet, CLIENT.CreateClient, PET.AddOwnerToPet);
-ROUTER.post('/singup',  PET.CreatePet, CLIENT.SignUpClient, PET.AddOwnerToPet);
+ROUTER.post('/signup',  PET.CreatePet, CLIENT.SignUpClient, PET.AddOwnerToPet);
 ROUTER.post('/Login',  CLIENT.LoginClient);
 ROUTER.get('/', AUTH_TOKEN, CLIENT.GetClients);
 ROUTER.get('/client', AUTH_TOKEN, CLIENT.GetClient);

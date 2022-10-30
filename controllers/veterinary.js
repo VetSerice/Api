@@ -1,13 +1,13 @@
 const VET = require('../models/veterinary.js');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const CLIENT = require("../models/client");
-const APPOINTMENT = require("../models/appointment");
-const DAY_SCHEDULE = require("../models/day_schedule");
-const SERVICE = require("../models/service");
-const Type = require("../models/type");
-const User = require("../models/user");
+const BreackDay = require("../models/Break_Hours");
 const PET = require("../models/pet");
+const APPOINTMENT = require("../models/appointment");
+const {GetPetID} = require("./pet");
+const {GetServiceID} = require("./service");
+const DAY_SCHEDULE = require("../models/day_schedule");
+
 
 exports.SignUpVeterinary = async (req, res) => {
     const body = req.body;
@@ -84,7 +84,6 @@ exports.CreateVeterinary = (req, res) => {
             res.status(201).json({ message: "vet created" });
         }).catch((error) => res.status(400).json({ error }));
 
-
     })
         .catch((error) => res.status(500).json({ error }));
 };
@@ -116,57 +115,122 @@ exports.GetVetID =async (id) => {
          throw Error("veto n'existe pas ")
     return veto
 };
-exports.UpdateVeto =  (req, res) => {
-    bcryptjs.hash(req.body.password, 10, async (err, hashed_password) => {
-        if (err)
-            return res.status(406).json(err);
+exports.UpdateVeto =  async (req, res) => {
+    let upddate = await VET.findByIdAndUpdate(req.query.id, {
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        Education: req.body.Education,
+        Specialization: req.body.Specialization,
+        Experience: req.body.Experience,
+        //Break_Hours: daywork,
+        vetAddress: req.body.vetAddress,
+        vetHeadOfMedics: req.body.vetHeadOfMedics,
+    },(err ,doc) => {
+        if(err)
+            res.status(406).json(err);
         /* Success */
-        let upddate = await VET.findByIdAndUpdate(req.body.id, {
-            _id: req.body.id,
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            phone: req.body.phone,
-            Education: req.body.Education,
-            Specialization: req.body.Specialization,
-            Availability: req.body.Availability,
-            Experience: req.body.Experience,
-            Break_Hours: req.body.Break_Hours,
-            vetAddress: req.body.vetAddress,
-            vetHeadOfMedics: req.body.vetHeadOfMedics,
-        }, err => {
-            if (err)
-                return res.status(406).json(err);
-            /* Success */
-            return upddate
-        });
+        console.log(doc)
+        res.status(201).json(doc);
+    })
+
+
+
+};
+exports.CreateBreakDay= (req, res, next) => {
+    const breakday = new BreackDay ({
+        day:req.body.Break_Hours.day,
+    }).save((err, daywork) => {
+        if(err)
+            return res.status(406).json(err);
+        res.locals.daywork = daywork;
+        next();
     });
 };
-exports.Validate =async (req,res) => {
-    VET.findById(req.query.id, async (err, veto) => {
-        if (err)
-            res.status(406).json();
-        console.log(veto.valid)
-        if (veto.valid ==false) {
-             VET.findByIdAndUpdate(req.query.id, {
-                valid: true,
-            }, err => {
-                if (err)
-                    return res.status(406).json(err);
-                /* Success */
-                 return res.status(200).send({ message: " vous avez bien valider ce compte " });
-             });
-        }
-        if (veto.valid ==true) {
-            return res.status(200).send({ message: " compte est deja valider " });
-
-        }
+exports.hour = (req, res) => {
+    BreackDay.find()
+        .populate('veterinary')
+        .exec((err, pets) => {
+            if(err)
+                return res.status(406).json(err);
 
             /* Success */
-        //res.status(200).json(veto);
-        else
-            res.status(404).json();
-    });
+            res.status(200).json(pets);
+        });
+};
+async function GetBreakhourIID(Break_Hours) {
+    let veto = await BreackDay.findById(Break_Hours)
+    if(!veto)
+        throw Error("veto n'existe pas ")
+    return veto
+}
+exports.GetDaybreakhours = async (req, res, next) => {
+    let dayList =[];
+    let lS = await VET.findById({_id:req.query.id})
+   // console.log(req.query.id)
+   // console.log(lS)
+    if (!lS){
+        return res.status(411).send({ message: "aucune donné trouver " });
+    }else{
+        for (const app of lS.Break_Hours) {
+            console.log(app)
+            dayList.push(await GetBreakhourIID(app))
+        }
+        return res.status(200).send(dayList);
 
+    }
+}
+exports.Validate =async (req,res) => {
+    let lS = await VET.findById({_id:req.query.id})
+    console.log(req.query.id)
+    console.log(lS)
+    if (!lS){
+        return res.status(411).send({ message: "aucune donné trouver " });
+    }else{
+        if (lS.valid==false){
+            VET.updateOne({valid:true})
+            return res.status(200).send({ message: "deja valider " });
+
+        }
+        if (lS.valid==true){
+            return res.status(411).send({ message: "deja mis àjour  " });
+        }
+    }
 }
 
+exports.CreateBreakDayVeto= (req, res, next) => {
+    VET.findByIdAndUpdate(req.query.id, {Break_Hours:[]}, (err ,doc) => {
+        if(err){
+            console.error(err,"messsage rroo")
+            // res.status(406).json(err);
+        }
+        // res.status(201).json({ message: "day created"});
+    });
+    console.log(req.body)
+    for (let day of req.body){
+        try {
+            const breakday = new BreackDay ({
+                day:day.day,
+
+            }).save((err, daywork) => {
+                if(err){
+                    console.error(err,"messsage rroo")
+                    // res.status(408).json(err);
+                };
+                VET.findByIdAndUpdate(req.query.id, { $push:{Break_Hours:daywork._id} }, (err ,doc) => {
+                    if(err){
+                        console.error(err,"messsage rroo")
+                        // res.status(406).json(err);
+                    }
+                    // res.status(201).json({ message: "day created"});
+                });
+            })
+        }catch (err){
+            console.error(err)
+        }
+
+
+    }
+    return res.status(200).json({message :"sucss"});
+
+};

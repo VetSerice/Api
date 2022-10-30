@@ -2,9 +2,10 @@ const CLIENT = require('../models/client.js');
 const bcrypt = require("bcrypt");
 const VET = require("../models/veterinary");
 const jwt = require("jsonwebtoken");
-const APPOINTMENT = require("../models/appointment");
+//const APPOINTMENT = require("../models/appointment");
 const DAY_SCHEDULE = require("../models/day_schedule");
 const SERVICE = require("../models/service");
+const {GetPetID} = require("./pet");
 
 exports.CreateClient = (req, res, next) => {
     var pets = [];
@@ -24,6 +25,7 @@ exports.CreateClient = (req, res, next) => {
 };
 exports.SignUpClient = async (req, res) => {
     var pets = [];
+
     const body = req.body;
     //check si les donné son vide
     if (!(body.email && body.password)) {
@@ -34,7 +36,7 @@ exports.SignUpClient = async (req, res) => {
     if (!user) {
         bcrypt.hash(req.body.password, 10).then((hash) => {
             const clien = new CLIENT({
-                name: req.body.name,
+                nameClient: req.body.name,
                 email: req.body.email,
                 password: hash,
                 phone: req.body.phone,
@@ -66,15 +68,23 @@ exports.GetClients = (req, res) => {
         });
 };
 exports.GetClient = (req, res) => {
-    CLIENT.findById(req.query.id, (err, client) => {
-        if(err)
+    var list = []
+    CLIENT.findById(req.query.id, async (err, client) => {
+        if (err)
             res.status(406).json();
-
-        if(client)
+        if (client){
+            for (app of client.pets) {
+            let pet = await GetPetID(app._id)
+                console.log(pet,"pet")
+            list.push(pet)
+        }
+            const obj ={client, list}
+            res.status(200).json(obj);}
             /* Success */
-            res.status(200).json(client);
-        else
-            res.status(404).json();
+
+    else
+        res.status(404).json();
+
     });
 };
 exports.AddPetToClient = (req, res, next) => {
