@@ -14,6 +14,8 @@ ROUTER.post('/Login',  CLIENT.LoginClient);
 ROUTER.get('/', AUTH_TOKEN, CLIENT.GetClients);
 ROUTER.get('/client', AUTH_TOKEN, CLIENT.GetClient);
 ROUTER.post('/add-pet', AUTH_TOKEN, PET.CreatePet, CLIENT.AddPetToClient, PET.AddOwnerToPet);
+ROUTER.get('/mypet', AUTH_TOKEN,  CLIENT.Getpetsforoneclient);
+
 
 
 

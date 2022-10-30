@@ -23,7 +23,7 @@ exports.GetService = (req, res) => {
     });
 };
 exports.GetShots = (req, res) => {
-    SERVICE.find({ type: 'vaccination' })
+    SERVICE.find({ type: req.body.id })
         .populate('service')
         .sort([['name', 'ascending']])
         .exec((err, shots) => {

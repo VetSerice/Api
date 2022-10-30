@@ -67,6 +67,26 @@ exports.GetClients = (req, res) => {
             res.json(clients);
         });
 };
+exports.Getpetsforoneclient = (req, res) => {
+    var list = []
+    CLIENT.findById(req.query.id, async (err, client) => {
+            if (err)
+                res.status(406).json();
+            if (client){
+                for (app of client.pets) {
+                    let pet = await GetPetID(app._id)
+                    console.log(pet,"pet")
+                    list.push(pet)
+                }
+                res.status(200).json(list);}
+            /* Success */
+
+            else
+                res.status(404).json();
+
+        }
+        );
+};
 exports.GetClient = (req, res) => {
     var list = []
     CLIENT.findById(req.query.id, async (err, client) => {
@@ -85,7 +105,8 @@ exports.GetClient = (req, res) => {
     else
         res.status(404).json();
 
-    });
+    }
+    );
 };
 exports.AddPetToClient = (req, res, next) => {
     CLIENT.findById(req.body.id, (err, client) => {

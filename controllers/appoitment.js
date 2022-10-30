@@ -1,6 +1,8 @@
 const MOMENT = require('moment');
 const DAY_SCHEDULE = require('../models/day_schedule.js');
 const APPOINTMENT = require('../models/appointment.js');
+const SERVICE = require("../models/service");
+const VET = require('../models/veterinary.js');
 
 exports.DaySchedule = (req, res) => {
     DAY_SCHEDULE.findOne({ date: new Date(req.body.date) }, (err, MyDaySchedule) => {
@@ -71,3 +73,36 @@ exports.UpdateAppointment = (req, res, next) => {
             res.status(201).json(appointments);
         });
 };
+
+
+exports.GetShots = (req, res) => {
+    console.log(req.body.type)
+    SERVICE.find({ type: req.body.type})
+        .populate('service')
+        .sort([['name']])
+        .exec((err, shots) => {
+            if(err)
+                return res.status(406).json(err);
+
+            /* Success */
+            res.status(200).json(shots);
+        });
+}
+
+exports.ville = (req, res) => {
+    console.log(req.body.vetAddress)
+    var code= req.body.vetAddress.postalCode
+    VET.find({ 'vetAddress.postalCode': code})
+        .populate('veterinary')
+        .exec((err, shots) => {
+            if(err)
+                return res.status(406).json(err);
+
+            /* Success */
+            res.status(200).json(shots);
+        });
+}
+
+
+
+

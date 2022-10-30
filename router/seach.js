@@ -7,7 +7,8 @@ const AUTH_TOKEN = require('../services/authenticateToken.js');
 const APPOINTMENT = require(PATH.join(__dirname, '../controllers/appoitment.js'));
 
 
-ROUTER.post('/', AUTH_TOKEN, APPOINTMENT.DaySchedule);
-ROUTER.post('/add-appointment', AUTH_TOKEN, APPOINTMENT.AddAppointment);
-ROUTER.post('/update-appointments', AUTH_TOKEN, APPOINTMENT.UpdateAppointment);
+ROUTER.get('/ville', AUTH_TOKEN, APPOINTMENT.ville);
+ROUTER.get('/shots', AUTH_TOKEN, APPOINTMENT.GetShots);
+
+
 module.exports = ROUTER;

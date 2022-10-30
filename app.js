@@ -8,7 +8,7 @@ const SERVICE_ROUTER = require('./router/service');
 const DAY_SCHEDULE_ROUTER = require('./router/schedule');
 const BREED_ROUTER = require('./router/breed');
 const VETERINARY = require('./router/veterinary');
-const APPOINTMENT = require('./router/appoitement');
+const APPOINTMENT = require('./router/seach');
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use('/services', SERVICE_ROUTER);
 app.use('/dayschedules', DAY_SCHEDULE_ROUTER);
 app.use('/breeds', BREED_ROUTER);
 app.use('/veterinarys', VETERINARY);
-app.use('/appointementeee', APPOINTMENT);
+app.use('/seach', APPOINTMENT);
 
 
 
